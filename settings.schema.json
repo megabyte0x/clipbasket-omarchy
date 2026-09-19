@@ -134,7 +134,7 @@
       "type": "boolean",
       "default": true,
       "title": "Paste immediately",
-      "description": "After picking a clip (click or Enter), paste it straight into the focused window instead of only copying it. Text and links are typed in directly, so it works in every app regardless of that app's paste shortcut (a terminal's Ctrl+Shift+V included) and never sends Ctrl+V; images and file lists fall back to a synthetic Ctrl+V.",
+      "description": "After picking a clip (click or Enter), paste it straight into the focused window instead of only copying it. Text and links are inserted with Shift+Insert so newlines stay in the field and long clips are not typed; images and file lists fall back to a synthetic Ctrl+V.",
       "x-clipbasket": {
         "group": "behavior",
         "requires": { "closePanelAfterAction": true },

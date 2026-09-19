@@ -59,7 +59,7 @@ Everything is in the Arch repositories; Omarchy already ships most of it.
 | `jq` | JSON in and out of the shell scripts | yes |
 | `python` | HTML → Markdown conversion (standard library only) | yes |
 | `imagemagick` | Image thumbnails; without it the full image is shown | no |
-| `wtype` | Types a picked clip straight into the focused window (the on-by-default "paste immediately" setting) | no |
+| `wtype` | Sends a paste keystroke into the focused window (the on-by-default "paste immediately" setting) | no |
 | `pandoc` | Used for HTML → Markdown when present; the built-in converter is the fallback | no |
 | `tesseract` (+ `tesseract-data-eng`) | Reads text out of copied images so a screenshot is searchable by what it shows; without it image text search is simply off | no |
 

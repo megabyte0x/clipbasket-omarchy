@@ -164,12 +164,11 @@ After picking a clip — clicking it, or selecting it and pressing `Enter` — p
 it straight into the window you were working in, rather than only copying it.
 You no longer have to reach for `SUPER + V` or `CTRL + V` afterwards.
 
-Text and links are **typed** directly into the focused window with `wtype -`
-(reading the clip off the clipboard on stdin), so the paste lands in every app
-regardless of the key that app binds paste to — a terminal that pastes on
-`CTRL + SHIFT + V` gets the text just the same, and `CTRL + V` is never sent.
-Images and file lists cannot be typed, so those fall back to a synthetic
-`CTRL + V`, the only way to hand a non-text selection to the window.
+Text and links are pasted with a synthetic `Shift+Insert` (the same chord
+Omarchy's clipboard uses), so the clip lands as a paste rather than being
+typed. Newlines stay in the field instead of firing Enter, long clips insert
+in one shot, and terminals still paste without needing `Ctrl+V`. Images and
+file lists keep a synthetic `CTRL + V`, which more apps accept for non-text.
 
 Wayland has no system-wide synthetic-input API, so this shells out to
 [`wtype`](https://github.com/atx/wtype) (or `ydotool` with its daemon running).

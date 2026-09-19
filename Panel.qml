@@ -837,20 +837,20 @@ Panel {
   }
 
   // Builds the shell command that pastes the just-copied clip into whatever
-  // window now holds focus. Text and links are typed straight in with `wtype -`
-  // (reading the clipboard on stdin), so the paste works in every app no matter
-  // which key that app binds paste to -- a terminal that pastes on
-  // Ctrl+Shift+V gets the text just the same, without ever sending Ctrl+V.
-  // Images and file lists cannot be typed, so those fall back to a synthetic
-  // Ctrl+V, the only way to hand a non-text selection to the window. `wl-paste`
-  // is only ever read after `copy` has finished writing it, because the action
-  // queue runs one command at a time; the sleep gives the compositor a moment
-  // to move focus back off the closing panel first.
+  // window now holds focus. The clip is already on the clipboard from `copy`;
+  // this only sends a paste keystroke. Text and links use Shift+Insert (the
+  // same chord Omarchy's clipboard uses) so terminals and text fields insert
+  // the clipboard as a paste -- newlines stay in the field instead of firing
+  // Enter, and a long clip lands in one shot instead of being typed. Images
+  // and file lists keep a synthetic Ctrl+V, which more apps accept for
+  // non-text. The action queue runs one command at a time, so this only runs
+  // after `copy` has finished; the sleep gives the compositor a moment to
+  // move focus back off the closing panel first.
   function autoPasteCommand(row) {
     var guard = "command -v wtype >/dev/null 2>&1 && sleep 0.12 && ";
     var kind = row ? String(row.kind) : "";
     if (kind === "text" || kind === "url") {
-      return guard + "wl-paste --no-newline | wtype -";
+      return guard + "wtype -M shift -k Insert -m shift";
     }
     return guard + "wtype -M ctrl -P v -p v -m ctrl";
   }
@@ -3173,7 +3173,7 @@ Panel {
           subtitle: !root.wtypeAvailable
             ? "Install wtype to enable automatic paste"
             : root.closePanelAfterAction
-              ? "Selecting a clip pastes it straight into the focused window \u2014 no Ctrl+V"
+              ? "Selecting a clip pastes it straight into the focused window"
               : "Auto-paste requires closing the popup first."
           Toggle {
             checked: root.pasteSelectedClipImmediately
